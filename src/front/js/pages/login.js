@@ -12,27 +12,30 @@ export const Login = () => {
 
 		const opts = {
            method: "POST",
+
 		   headers: {
 			"content-Type" : "application/json"
 		   },
+
 		   body: JSON.stringify({
 
-                  "email": email,
-				  "password":password
+			      email: email,
+				  password: password
 
-		   })
-		}
+		   }),
+		};
 
-		fetch("https://jubilant-cod-jgv4wvgjqpp3qr95-3001.app.github.dev/api/token", opts)
+		fetch("https://opulent-space-adventure-6q9776957gc5vp4-3001.app.github.dev/api/token", opts)
          
 		.then(resp => {
 			if(resp.status === 200) return resp.json();
-			else alert ("There has been some error")
+			else alert ("There has been some error");
 		})
 
          .then()
+
          .catch(error => {
-			console.error("There was an error!!!",error)
+			console.error("There was an error!!!",error);
 		 })
 
 	}
