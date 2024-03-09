@@ -10,7 +10,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate(); // Use useNavigate hook
   const token = sessionStorage.getItem("token");
-  console.log("this is your token", token);
+  console.log("this is your token", store.token);
 
   const handleClick = async (e) => {
     e.preventDefault(); // Prevent default form submission

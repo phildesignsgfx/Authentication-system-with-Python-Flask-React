@@ -22,6 +22,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
+
+			syncTokenFromSessionStore: () => {
+              
+				const token = sessionStorage.getItem("token");
+				console.log("Aplication just loaded, synching the session stprage token");
+				if (token && token != "" && token != undefined) setStore({ token:token});
+			},
+
+			logout: () => {
+              
+				sessionStorage.removeItem("token");
+				console.log("login out");
+				setStore({ token:null});
+			},
+
+
+
+
 			login: async (email, password) => {
 
 				const opts = {
