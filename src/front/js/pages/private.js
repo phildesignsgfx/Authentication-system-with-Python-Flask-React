@@ -8,7 +8,7 @@ export const Private = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
+			<h1>I am in Private</h1>
 			<p>
 				<img src={rigoImageUrl} />
 			</p>

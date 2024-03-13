@@ -1,3 +1,4 @@
+// Import necessary modules
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
@@ -18,7 +19,7 @@ export const Login = () => {
     // After login, check if the token exists and possibly redirect
     const updatedToken = sessionStorage.getItem("token");
     if (updatedToken) {
-      navigate("/path-after-login"); // Adjust the path as needed, use navigate instead of history.push
+      navigate("/private"); // Redirect to Private page
     }
   };
 
