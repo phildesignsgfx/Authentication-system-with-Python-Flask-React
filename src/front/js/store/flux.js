@@ -82,6 +82,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
+
+		signup: async (email, password) => {
+			try {
+			  const response = await fetch("https://sturdy-disco-p64gq46jw77frr6v-3001.app.github.dev/api/register", { // Adjust URL as needed
+				method: "POST",
+				headers: {
+				  "Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email, password }),
+			  });
+			  
+			  if (!response.ok) {
+				throw new Error("Signup failed");
+			  }
+		
+			  // Here you might want to do something with the response or just confirm success
+			  const data = await response.json(); // For example, getting back a success message or user data
+			  console.log(data); // Or handle data as needed
+			  
+			  // Maybe update context state or do other actions here upon successful signup
+			} catch (error) {
+			  console.error("Signup error:", error);
+			}
+		  }
+		},
+
+
+
+
 			getMessage: async () => {
 				try{
 					// fetching data from the backend
