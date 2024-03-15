@@ -9,9 +9,10 @@ export const Register = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    
     const handleClick = () => {
         actions.registerUser(username, password)
-        navigate("/")
+        navigate("/login")
     }
 
 	return (

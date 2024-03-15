@@ -10,7 +10,7 @@ export const Login = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const handleClick = () => {
-        actions.logIn(username, password)
+        actions.login(username, password)
         navigate("/private")
     }
 

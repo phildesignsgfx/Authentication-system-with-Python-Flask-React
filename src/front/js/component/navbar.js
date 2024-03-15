@@ -19,7 +19,7 @@ export const Navbar = () => {
 				<Link to="/register">
 					<button className="btn btn-primary me-2">Register</button>
 			   </Link>
-					{token && token!="" && token!=undefined ? <button className="btn btn-primary" onClick={()=>actions.logOut()}>Log out</button> :
+					{token && token!="" && token!=undefined ? <button className="btn btn-primary" onClick={()=>actions.logout()}>Log out</button> :
 					(<Link to="/login">
 					<button className="btn btn-primary">Login</button>
 			   </Link>)}

@@ -55,7 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			},
 
-			logOut: () =>{
+			logout: () =>{
 				sessionStorage.removeItem("token")
 				setStore({ token: null})
 				setStore({ message: null})
@@ -64,7 +64,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 
 			},
 
-			logIn: (username, password) => {
+			login: (username, password) => {
 				const opts = {
 				  method: "POST",
 				  headers: {

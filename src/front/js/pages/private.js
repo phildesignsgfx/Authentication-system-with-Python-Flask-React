@@ -12,6 +12,14 @@ export const Private = () => {
     useEffect(()=>{
         actions.getMessage();
     },[token])
+
+	useEffect(() => {
+        if (token) {
+            actions.logout(); // Call logout action when token exists (user is logged in)
+            history.push("/login"); // Redirect to login page after logout
+        }
+
+    }, [token, actions, history]);
 	
 	return (
 		<div className="text-center mt-5">
