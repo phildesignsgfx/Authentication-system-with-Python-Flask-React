@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			token: null,
 			message: null,
+			
 			demo: [
 				{
 					title: "FIRST",
@@ -22,107 +23,93 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 
-
-			syncTokenFromSessionStore: () => {
-              
-				const token = sessionStorage.getItem("token");
-				console.log("Aplication just loaded, synching the session stprage token");
-				if (token && token != "" && token != undefined) setStore({ token:token});
+			syncTokenFromLocal: () =>{
+				const token = sessionStorage.getItem("token")
+				if (token && token!="" && token != undefined){
+					setStore({ token: token})
+					console.log("token updated from session storage")
+				} 
 			},
 
-			logout: () => {
-              
-				sessionStorage.removeItem("token");
-				console.log("login out");
-				setStore({ token:null});
-			},
-
-
-
-
-			login: async (email, password) => {
-
+			registerUser: (username, password) => {
 				const opts = {
-					method: "POST",
-		 
-					headers: {
-					 "Content-Type" : "application/json"
-					},
-		 
-					body: JSON.stringify({
-		 
-						   "email" : email,
-						   "password" :password
-		 
-					})
-				 };
-
-				 try {
-		 
-				 const resp = await fetch("https://sturdy-disco-p64gq46jw77frr6v-3001.app.github.dev/api/token", opts)
-				 
-					 if (resp.status !== 200)  { 
-						alert ("There has been some error");
-						return false;
-					}
-
-					const data = await resp.json();
-					console.log("this came from the backend",data);
-					sessionStorage.setItem ("token", data.access_token);
-					setStore ({ token: data.access_token})
-					return true;	            
-
-			}
-
-            catch(error){
-				console.error("There has been some error login in")
-			}
-		},
-
-
-
-
-
-		signup: async (email, password) => {
-			try {
-			  const response = await fetch("https://sturdy-disco-p64gq46jw77frr6v-3001.app.github.dev/api/register", { // Adjust URL as needed
-				method: "POST",
-				headers: {
-				  "Content-Type": "application/json",
-				},
-				body: JSON.stringify({ email, password }),
-			  });
-			  
-			  if (!response.ok) {
-				throw new Error("Signup failed");
-			  }
-		
-			  // Here you might want to do something with the response or just confirm success
-			  const data = await response.json(); // For example, getting back a success message or user data
-			  console.log(data); // Or handle data as needed
-			  
-			  // Maybe update context state or do other actions here upon successful signup
-			} catch (error) {
-			  console.error("Signup error:", error);
-			}
-		  }
-		},
-
-
-
-
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
+				  method: "POST",
+				  headers: {
+					"Content-type": "application/json",
+				  },
+				  body: JSON.stringify({
+					email: username,
+					password: password,
+					is_active: true
+				  }),
+				};
+				fetch(process.env.BACKEND_URL + "/api/register", opts)
+				  .then((resp) => {
+					if (resp.status === 200) return resp.json();
+				  })
+				  .then((data) => {
+					console.log(data)
+				  })
+				  .catch((error) => {
+					console.error("There was an error", error);
+				  });
 			},
+
+			logOut: () =>{
+				sessionStorage.removeItem("token")
+				setStore({ token: null})
+				setStore({ message: null})
+				setStore({ message2: null})
+				console.log("logged out")
+				 
+			},
+
+			logIn: (username, password) => {
+				const opts = {
+				  method: "POST",
+				  headers: {
+					"Content-type": "application/json",
+				  },
+				  body: JSON.stringify({
+					username: username,
+					password: password,
+				  }),
+				};
+				fetch(process.env.BACKEND_URL + "/api/login", opts)
+				  .then((resp) => {
+					if (resp.status === 200) return resp.json();
+				  })
+				  .then((data) => {
+					sessionStorage.setItem("token", data.access_token);
+					setStore({ token: data.access_token })
+				  })
+				  .catch((error) => {
+					console.error("There was an error", error);
+					
+				  });
+			  },
+
+			getMessage: () => {
+				const token = sessionStorage.getItem("token")
+				const opts = {
+					method: "GET",
+					headers: {
+					  "Content-type": "application/json",
+					Authorization: "Bearer " + token,
+					},
+				  };
+				  fetch(process.env.BACKEND_URL + "/api/protected", opts)
+					.then((resp) => {
+					  if (resp.status === 200) return resp.json();
+					})
+					.then((data) => {
+						setStore({ message: data })
+					})
+					.catch((error) => {
+					  console.error("There was an error", error);
+					});
+				},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

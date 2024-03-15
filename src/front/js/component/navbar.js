@@ -1,26 +1,30 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
-    const { store, actions } = useContext(Context);
-    
-    return (
-        <nav className="navbar navbar-light bg-light">
-            <div className="container">
-                <Link to="/">
-                    <span className="navbar-brand mb-0 h1">React Boilerplate</span>
-                </Link>
-                <div className="ml-auto">
-                    {!store.token ? (
-                        <Link to="/login">
-                            <button className="btn btn-primary">Login</button>
-                        </Link>
-                    ) : (
-                        <button onClick={() => actions.logout()} className="btn btn-primary">Logout</button>
-                    )}
-                </div>
-            </div>
-        </nav>
-    );
+	const { store, actions } = useContext(Context);
+	const token = store.token
+	return (
+		<nav className="navbar navbar-light bg-light">
+			<div className="container">
+				<Link to="/">
+					<span className="navbar-brand mb-0 h1">Home</span>
+				</Link>
+				<Link to="/private">
+					<span className="navbar-brand mb-0 h1">Private</span>
+				</Link>
+				<div className="ml-auto">
+				<Link to="/register">
+					<button className="btn btn-primary me-2">Register</button>
+			   </Link>
+					{token && token!="" && token!=undefined ? <button className="btn btn-primary" onClick={()=>actions.logOut()}>Log out</button> :
+					(<Link to="/login">
+					<button className="btn btn-primary">Login</button>
+			   </Link>)}
+				</div>
+			</div>
+		</nav>
+	);
 };
