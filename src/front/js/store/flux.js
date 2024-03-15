@@ -55,13 +55,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  });
 			},
 
-			logout: () =>{
-				sessionStorage.removeItem("token")
-				setStore({ token: null})
-				setStore({ message: null})
-				setStore({ message2: null})
-				console.log("logged out")
-				 
+			logOut: () => {
+				sessionStorage.removeItem("token"); // Removes the token from sessionStorage
+				setStore({ token: null, message: null, message2: null }); // Resets token, message, and message2 in the global store to null
+				console.log("logged out");
 			},
 
 			login: (username, password) => {
