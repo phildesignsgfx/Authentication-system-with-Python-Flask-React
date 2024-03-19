@@ -25,7 +25,7 @@ export const Private = () => {
         <div className="text-center mt-5">
             <h1>Welcome to your Account</h1>
             {token ? <h1>Secrets exposed</h1> : <h1>Welcome to your page</h1>}
-            {message ? <div className="alert alert-info">{message}</div> : <div className="alert alert-info">Si estas logeado podras ver la sección secreta</div>}
+            {message ? <div className="alert alert-info">{message}</div> : <div className="alert alert-info">Welcome</div>}
             <button className="btn btn-primary" onClick={handleLogout}>Log Out</button>
         </div>
     );
