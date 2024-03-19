@@ -1,3 +1,8 @@
+from flask import Blueprint, jsonify, request
+from flask_jwt_extended import create_access_token
+
+api = Blueprint('api', __name__)
+
 @api.route('/token', methods=['POST'])
 def create_token():
     email = request.json.get("email")
